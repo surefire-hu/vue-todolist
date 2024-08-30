@@ -3,11 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>titolo</title>
+    <title>Vue to do list</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
-    
+    <div id="app">
+        <!-- header -->
+        <header>
+            <img src="img/Logo.png" alt="Toboolist">
+            <h1>Toobolist</h1>
+        </header>
+        <!-- main -->
+        <main>
+            <div class="container">
+                <div class="task-container top">
+                    <input v-model="newTodoText" @keyup.enter="addTodo" placeholder="Aggiungi un nuovo todo">
+                    <select v-model="newTodoTag">
+                        <option value="editorial">Editorial</option>
+                        <option value="q1-goals">Q1 Goals</option>
+                        <option value="recruiting">Recruiting</option>
+                        <option value="mobile">Mobile</option>
+                        <option value="meeting">Meeting</option>
+                        <option value="website">Website</option>
+                        <option value="sales">Sales</option>
+                    </select>
+                    <button @click="addTodo" class="task-button">Aggiungi Todo</button>
+                </div>
+                <div class="task-container bottom">
+                    <h2>
+                        <span class="font">&#11206;</span>
+                        Todo List
+                    </h2>
+                    <ul>
+                        <li v-for="(todo, index) in todos" :key="index" class="task-item">
+                            <span :class="['circle-check', todo.done ? 'green' : 'red']" @click="toggleDone(index)">
+                                {{ todo.done ? '✔' : '✘' }}
+                            </span>
+                            <span class="task-name" :class="{ 'done': todo.done }" @click="toggleDone(index)">
+                                {{ todo.text }}
+                            </span>
+                            <span :class="['tag', todo.tag]">{{ todo.tag }}</span>
+                            <span class="delete" @click="removeTodo(index)">✖</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
     <script src="js/script.js"></script>
 </body>
 </html>
